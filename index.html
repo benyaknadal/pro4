@@ -1,25 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PWA بسيط</title>
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="logo1.png">
-<style>
-body {margin:0; font-family:system-ui; display:flex; justify-content:center; align-items:center; height:100vh; background:#f3f4f6;}
-.app {background:white; padding:20px; max-width:350px; border-radius:16px; box-shadow:0 10px 25px rgba(0,0,0,0.1); text-align:center;}
-button {padding:10px 20px; margin-top:15px; background:#2563eb; color:white; border:none; border-radius:10px; font-size:16px; cursor:pointer;}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تطبيق PWA بسيط</title>
+  <link rel="stylesheet" href="style.css" />
+  
+  <!-- ملف manifest -->
+  <link rel="manifest" href="manifest.json" />
+  
+  <!-- أيقونات لدعم التثبيت -->
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  
+  <!-- Service Worker -->
+  <script defer src="app.js"></script>
 </head>
 <body>
-<div class="app">
-<h2>مرحبًا بك!</h2>
-<p>هذا تطبيق PWA بسيط يعمل كتطبيق حقيقي على هاتفك.</p>
-<button onclick="alert('تعمل ✔')">زر تجريبي</button>
-</div>
-<script>
-if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
-</script>
+  <h1>مرحباً بك في تطبيقي PWA!</h1>
+  <p>يمكنك تثبيت هذا التطبيق على جهازك.</p>
+  <button id="installBtn" style="display: none;">تثبيت التطبيق</button>
 </body>
 </html>
