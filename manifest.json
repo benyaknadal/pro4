@@ -1,13 +1,21 @@
 {
-  "name": "PWA بسيط",
-  "short_name": "PWA",
-  "start_url": "index.html",
-  "scope": ".",
+  "name": "تطبيق PWA بسيط",
+  "short_name": "PWA بسيط",
+  "description": "تطبيق ويب تدريجي بسيط يعمل دون اتصال.",
+  "start_url": "/",
   "display": "standalone",
-  "theme_color": "#2563eb",
   "background_color": "#ffffff",
+  "theme_color": "#4a90e2",
   "icons": [
-    {"src":"logo1.png","sizes":"192x192","type":"image/png"},
-    {"src":"logo1.png","sizes":"512x512","type":"image/png"}
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }
