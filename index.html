@@ -4,21 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>تطبيق PWA بسيط</title>
+  <meta name="description" content="تطبيق ويب تدريجي يعمل دون اتصال ويدعم التثبيت على الشاشة الرئيسية.">
+
   <link rel="stylesheet" href="style.css" />
-  
-  <!-- ملف manifest -->
   <link rel="manifest" href="manifest.json" />
-  
-  <!-- أيقونات لدعم التثبيت -->
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
   <link rel="apple-touch-icon" href="icons/icon-192.png" />
-  
-  <!-- Service Worker -->
-  <script defer src="app.js"></script>
+
+  <!-- تفعيل شريط الحالة على iPhone -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#1976d2">
 </head>
 <body>
-  <h1>مرحباً بك في تطبيقي PWA!</h1>
-  <p>يمكنك تثبيت هذا التطبيق على جهازك.</p>
-  <button id="installBtn" style="display: none;">تثبيت التطبيق</button>
+  <div class="container">
+    <h1>مرحباً بك في تطبيقي!</h1>
+    <p>هذا تطبيق PWA يعمل حتى بدون اتصال بالإنترنت 🌐.</p>
+
+    <!-- زر التثبيت -->
+    <div id="installPromo">
+      <p>✨ أضف هذا التطبيق إلى شاشتك الرئيسية!</p>
+      <button id="installBtn">تثبيت التطبيق</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>
