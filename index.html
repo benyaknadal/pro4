@@ -1,136 +1,59 @@
-<!--
-ملف PWA بسيط: يحتوي على ثلاثة ملفات رئيسية
-1) index.html
-2) manifest.json
-3) sw.js (Service Worker)
-
-افتح هذا الملف في محررك، انسخ الملفات إلى مجلد واحد وابدأ سيرفر محلي أو ارفعهم على استضافة HTTPS.
--->
-
---- index.html ---
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>تطبيق PWA بسيط</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PWA App</title>
 
   <!-- Manifest -->
-  <link rel="manifest" href="/manifest.json">
+  <link rel="manifest" href="manifest.json">
 
-  <!-- أيقونة للـ Safari / iOS -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="PWA بسيط">
-  <link rel="apple-touch-icon" href="/logo1.png"amily: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#f3f4f6}
-    .card{background:white;padding:24px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.08);max-width:420px;text-align:center}
-    button{padding:10px 16px;border-radius:8px;border:0;background:#2563eb;color:white;font-weight:600}
+  <!-- iPhone icon -->
+  <link rel="apple-touch-icon" href="logo1.png">
+
+  <style>
+    body {
+      margin: 0;
+      background: #f3f4f6;
+      font-family: system-ui;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .app {
+      background: white;
+      padding: 20px;
+      max-width: 350px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 15px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>تطبيق PWA بسيط</h1>
-    <p>هذا مثال صغير يبيّن كيفية عمل تطبيق ويب تقدمي يمكن تثبيته على الهاتف.</p>
-    <p id="status">حالة: غير متصل بالخدمة</p>
-    <button id="notify">اشعار تجريبي</button>
+  <div class="app">
+    <h2>مرحبًا بك!</h2>
+    <p>هذا تطبيق PWA بسيط يعمل كتطبيق حقيقي على هاتفك.</p>
+    <button onclick="alert('تعمل ✔')">زر تجريبي</button>
   </div>
 
   <script>
-    // تسجيل الـ Service Worker
+    // Register service worker
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
-        .then(() => console.log('sw registered'))
-        .catch(e => console.log('sw failed', e));
+      navigator.serviceWorker.register('sw.js');
     }
-
-    // واجهة بسيطة للاشعارات (إن حصلت صلاحية)
-    document.getElementById('notify').addEventListener('click', async () => {
-      if (!('Notification' in window)) return alert('المتصفح لا يدعم الاشعارات');
-      const perm = await Notification.requestPermission();
-      if (perm === 'granted') new Notification('اشعار تجريبي', {body:'تم تفعيل الاشعارات من التطبيق'});
-      else alert('لم تمنح صلاحية الاشعارات');
-    });
-
-    // تعقب حالة التثبيت (على كروم سيظهر prompt تلقائيًا حين يفي الشروط)
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      // احفظ الحدث لعرضه لاحقًا
-      window.deferredPrompt = e;
-      const btn = document.createElement('button');
-      btn.textContent = 'تثبيت التطبيق';
-      btn.style.marginTop = '12px';
-      btn.onclick = async () => {
-        if (!window.deferredPrompt) return;
-        window.deferredPrompt.prompt();
-        const choice = await window.deferredPrompt.userChoice;
-        console.log('choice', choice);
-        window.deferredPrompt = null;
-      };
-      document.querySelector('.card').appendChild(btn);
-    });
-
-    // تحديث حالة الاتصال بالخدمة
-    navigator.serviceWorker && navigator.serviceWorker.ready.then(() => {
-      document.getElementById('status').textContent = 'حالة: مثبت على خدمة (offline-ready)';
-    }).catch(()=>{});
   </script>
 </body>
 </html>
 
---- manifest.json ---
-{
-  "name": "PWA بسيط",
-  "short_name": "PWA",
-  "description": "مثال بسيط لتطبيق ويب تقدمي يمكن تثبيته على الهاتف.",
-  "start_url": "/index.html",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#2563eb",
-  "icons": [
-    { "src": "/icons/ico: "192x1"/logo1.png"ng" },
-    { "src": "/icons/icon-512.png"", "type": "image"/logo1.png".js ---
-const CACHE_NAME = 'pwa-simple-v1';
-const ASSETS = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/icons/icon-192.png'2.png'
-];
-
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
-  );
-});
-
-self.addEventListener('activate', (event) => {
-  event.waitUntil(self.clients.claim());
-});
-
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((cached) => cached || fetch(event.request))
-  );
-});
-
---- icons ---
-/* ضع أيقونات PNG بمقاسات 192x192 و 512x512 في مجلد /icons/ */
-
---- طريقة التشغيل محليًا (اختصار) ---
-1) ضع الملفات في مجلد واحد، مثلا pwa-demo/
-2) شغّل سيرفر محلي (HTTPS مرغوب لكن للتجربة على Android يكفي HTTP مع عنوان محلي في بعض المتصفحات):
-   - أبسط (Python):
-       python3 -m http.server 8080
-     ثم افتح http://<IP_الكمبيوتر>:8080 من هاتفك (تأكد أن الهاتف على نفس الشبكة)
-   - أو استخدم http-server (node):
-       npx http-server -c-1 -p 8080
-
-3) على هاتف Android (Chrome): افتح العنوان، وسترى إشعار "Add to Home screen" أو استخدم زر القائمة -> "Install app".
-4) على iPhone (Safari): افتح العنوان عبر HTTPS -> اضغط على زر المشاركة -> "Add to Home Screen".
-
---- ملاحظات ونصائح ---
-- لتجربة كاملة (مثل تشغيل على iOS، والسلوك الصحيح للـ service worker) استعمل HTTPS (GitHub Pages أو Netlify أو Vercel تتيح HTTPS بسهولة).
-- إذا أردت أضيف لك نسخة مع وظائف إضافية (التخزين المحلي، بيانات مزامنة، صفحات متعددة)، أخبرني ما الذي تريده وسأعدل المشروع.
-- إن واجهت مشكلة في تثبيت التطبيق أو لم يظهر زر التثبيت، قل لي نظام هاتفك (Android أو iPhone) ومتصفحك وسأساعدك خطوة بخطوة.
-
-
-<!-- نهاية المستند -->
