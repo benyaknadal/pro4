@@ -1,20 +1,15 @@
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open("pwa-cache").then((cache) => {
-      return cache.addAll([
-        "index.html",
-        "manifest.json",
-        "icons/icon-192.png",
-        "icons/icon-512.png"
-      ]);
-    })
-  );
+const CACHE = "v1";
+const ASSETS = [
+  "index.html",
+  "manifest.json",
+  "logo1.png"
+];
+
+self.addEventListener("install", e => {
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
 });
 
-self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((res) => {
-      return res || fetch(event.request);
-    })
-  );
+self.addEventListener("fetch", e => {
+  e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
 });
+
