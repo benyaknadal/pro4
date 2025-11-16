@@ -1,20 +1,23 @@
 {
-  "name": "PWA بسيط",
-  "short_name": "PWA",
+  "name": "My Simple App",
+  "short_name": "MyApp",
   "start_url": "index.html",
+  "scope": ".",
   "display": "standalone",
-  "background_color": "#ffffff",
+  "orientation": "portrait",
   "theme_color": "#2563eb",
+  "background_color": "#ffffff",
   "icons": [
     {
-      "src": "icons/icon-192.png",
+      "src": "logo1.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icons/icon-512.png",
+      "src": "logo1.png",
       "sizes": "512x512",
       "type": "image/png"
     }
   ]
 }
+
